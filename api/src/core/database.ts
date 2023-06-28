@@ -1,10 +1,11 @@
 import MySQL, { Pool, PoolOptions, PoolConnection } from 'mysql2/promise';
 import { Debug } from './debug';
 
+// TODO: create a .env file for the credentials
 const options: PoolOptions = {
 	host: 'localhost',
 	user: 'root',
-	password: 'root',
+	password: '', // change if you do have a password
 	database: 'countdown_events',
 	waitForConnections: true,
 	connectionLimit: 10,
