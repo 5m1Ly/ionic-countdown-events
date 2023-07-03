@@ -1,0 +1,80 @@
+.container {
+    height: 100%;
+}
+
+.event-input {
+    display: flex;
+    height: 100%;
+    padding: 10px 10px;
+    flex-flow: column;
+}
+
+ion-input {
+    background: rgb(89, 89, 89);
+    border: 1px solid rgb(56, 56, 56);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.input-wrapper.sc-ion-input-ios {
+    padding: 0px 10px
+}
+
+ion-datetime-button {
+    justify-content: space-between;
+}
+
+ion-datetime-button::part(native) {
+    font-size: 22px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgb(56, 56, 56);
+    border-radius: 10px;
+    margin-inline: 0;
+    width: calc(50% - 5px);
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-grow: 1;
+    width: 100%;
+    flex-flow: row;
+}
+
+.actions>ion-button {
+    margin: 0;
+}
+
+.save {
+    flex-grow: 1;
+}
+
+.delete {
+    width: calc(50% - 5px);
+}
+
+.save::part(native) {
+    background: rgb(32, 151, 80);
+    transform: translateY(-3px);
+    box-shadow: 0px 3px 0px -1px #2fdf75;
+}
+
+.save::part(native):active {
+    transform: translateY(-1px);
+    box-shadow: 0px 1px 0px -1px #2fdf75;
+    transition: 100ms;
+}
+
+.delete::part(native) {
+    background: rgb(120, 34, 46);
+    transform: translateY(-3px);
+    box-shadow: 0px 3px 0px -1px #ff4961;
+}
+
+.delete::part(native):active {
+    transform: translateY(-1px);
+    box-shadow: 0px 1px 0px -1px #ff4961;
+    transition: 100ms;
+}

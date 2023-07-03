@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.countdown-events {
+    padding: 10px;
+}
+
+.countdown-event {
+    font-family: Montserrat;
+    box-shadow: 0px 2px 4px -1px rgb(255, 0, 0);
+}
+
+ion-card-title {
+    font-size: 28px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.countdown-event-title {
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.countdown-event-remaining {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0px 5px;
+}
+
+.countdown-event-remaining>p {
+    width: 25%;
+    text-align: center;
+}
+
+.countdown-event-remaining>p>span {
+    font-size: 18px;
+}
+
+.countdown-event-remaining>p>strong {
+    font-size: 26px;
+    color: azure;
+}
+
+@media only screen and (max-height: 300px) {
+    .select-button {
+        top: 22vh;
+    }
+}
+
+@media only screen and (min-height: 300px) {
+    .select-button {
+        top: 20vh;
+    }
+}
+
+@media only screen and (min-height: 350px) {
+    .select-button {
+        top: 18vh;
+    }
+}
+
+@media only screen and (min-height: 400px) {
+    .select-button {
+        top: 16vh;
+    }
+}
+
+@media only screen and (min-height: 500px) {
+    .select-button {
+        top: 14vh;
+    }
+}
+
+@media only screen and (min-height: 600px) {
+    .select-button {
+        top: 12vh;
+    }
+}
+
+@media only screen and (min-height: 700px) {
+    .select-button {
+        top: 10vh;
+    }
+}
+
+@media only screen and (min-height: 800px) {
+    .select-button {
+        top: 8vh;
+    }
+}

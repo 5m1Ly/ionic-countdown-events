@@ -47,8 +47,9 @@ export default class Controller extends Debug {
 			`${req.method} ${req.path} | requested by client (${req.ip})`
 		);
 		if (
-			(req.path === this._path && req.method !== 'GET') ||
-			req.path === this._path + '/single'
+			((req.path === this._path + '/events' && req.method !== 'GET') ||
+				req.path === this._path + '/events/single') &&
+			req.path !== this._path + '/uuid'
 		) {
 			this.print(
 				`${req.method} ${req.path} | request body:`,
@@ -119,15 +120,31 @@ export default class Controller extends Debug {
 		next();
 	}
 
+	async createUUID(req: Request, res: Response) {
+		const timed = this.timed(
+			`${req.method} ${req.path} | executing request`
+		);
+		this.respond(
+			req,
+			res,
+			{
+				status: HTTPStatusCodes.OK,
+				message: 'created event successfuly',
+				data: { uuid: randomUUID() },
+			},
+			timed
+		);
+	}
+
 	async createEvent(req: Request, res: Response) {
 		const timed = this.timed(
 			`${req.method} ${req.path} | executing request`
 		);
-		const { name, finish_date } = req.body;
+		const { uuid, name, finish_date } = req.body;
 		try {
 			const data = this.database.query(
 				'INSERT INTO `events` (`uuid`, `name`, `finished_on`) VALUES (?, ?, ?)',
-				[req.body.uuid, name, finish_date]
+				[uuid, name, finish_date]
 			);
 			this.respond(
 				req,

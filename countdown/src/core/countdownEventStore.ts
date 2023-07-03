@@ -8,7 +8,7 @@ export class CountdownEventStore {
 
 	private readonly loaded: Promise<boolean>;
 
-	private async ready(): Promise<boolean> {
+	async ready(): Promise<boolean> {
 		const isLoaded = await this.loaded;
 		if (isLoaded === false) {
 			console.error(
@@ -51,10 +51,10 @@ export class CountdownEventStore {
 					const event = new CountdownEvent(
 						data.uuid,
 						data.name,
-						new Date(data.finished_on)
+						data.finished_on
 					);
 					this.cache.set(event.uuid(), event);
-					if (event.finishDate().valueOf() <= Date.now()) {
+					if (new Date(event.finishDate()).valueOf() <= Date.now()) {
 						this.passed.add(event.uuid());
 					} else {
 						this.active.add(event.uuid());
@@ -78,28 +78,19 @@ export class CountdownEventStore {
 	}
 
 	async events(
-		uuids: string[] = [],
 		active: boolean = true
 	): Promise<Array<CountdownEvent> | null> {
-		if (!this.ready()) return null;
+		const ready = await this.ready();
+		if (!ready) return null;
 		const events: Array<CountdownEvent> = [];
-		if (uuids.length > 0) {
-			await Promise.all(
-				uuids.map(async (uuid) => {
-					const use = active
-						? this.active.has(uuid)
-						: this.passed.has(uuid);
-					if (use && this.cache.has(uuid)) {
-						events.push(this.cache.get(uuid)!);
-					}
-				})
-			);
-		} else {
-			for (const [_, event] of this.cache.entries()) {
-				events.push(event);
-			}
+		for (const [_, event] of this.cache.entries()) {
+			events.push(event);
 		}
-		return events;
+		return events.filter((event) => {
+			const left = Date.parse(event.finishDate()) - Date.now();
+			if (active) return left > 0;
+			else return left < 0;
+		});
 	}
 
 	async editEvent(uuid: string): Promise<CountdownEventBuilder | null> {

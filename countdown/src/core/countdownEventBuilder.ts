@@ -1,24 +1,22 @@
 import { CountdownEvent } from './countdownEvent';
 
 export class CountdownEventBuilder {
-    name!: string;
-    finish_date!: Date;
+	name!: string;
+	finish_date!: string;
 
-    constructor(
-        private readonly uuid: string
-    ) {}
+	constructor(private readonly uuid: string) {}
 
-    setName(name: string): CountdownEventBuilder {
-        this.name = name;
-        return this;
-    }
+	setName(name: string): CountdownEventBuilder {
+		this.name = name;
+		return this;
+	}
 
-    setFinishDate(finishDate: Date): CountdownEventBuilder {
-        this.finish_date = finishDate;
-        return this;
-    }
+	setFinishDate(finishDate: string): CountdownEventBuilder {
+		this.finish_date = finishDate;
+		return this;
+	}
 
-    build(): CountdownEvent {
-        return new CountdownEvent(this.uuid, this.name, this.finish_date);
-    }
+	build(): CountdownEvent {
+		return new CountdownEvent(this.uuid, this.name, this.finish_date);
+	}
 }
