@@ -69,8 +69,7 @@ export class CountdownEventStore {
 		this.loaded = this.initialize();
 	}
 
-	async event(uuid: string): Promise<CountdownEvent | null> {
-		if (!this.ready()) return null;
+	event(uuid: string): CountdownEvent | null {
 		if (this.cache.has(uuid)) {
 			return this.cache.get(uuid)!;
 		}
@@ -80,8 +79,7 @@ export class CountdownEventStore {
 	async events(
 		active: boolean = true
 	): Promise<Array<CountdownEvent> | null> {
-		const ready = await this.ready();
-		if (!ready) return null;
+		if (!(await this.ready())) return null;
 		const events: Array<CountdownEvent> = [];
 		for (const [_, event] of this.cache.entries()) {
 			events.push(event);
@@ -93,8 +91,13 @@ export class CountdownEventStore {
 		});
 	}
 
+	async set(event: CountdownEvent) {
+		if (!(await this.ready())) return null;
+		this.cache.set(event.uuid(), event);
+	}
+
 	async editEvent(uuid: string): Promise<CountdownEventBuilder | null> {
-		if (!this.ready()) return null;
+		if (!(await this.ready())) return null;
 		if (uuid && this.cache.has(uuid)) {
 			const event = this.cache.get(uuid)!;
 			return event.edit();
@@ -103,10 +106,9 @@ export class CountdownEventStore {
 	}
 
 	async deleteEvent(uuid: string): Promise<boolean> {
-		if (!this.ready()) return false;
+		if (!(await this.ready())) return false;
 		if (uuid && this.cache.has(uuid)) {
-			const event = this.cache.get(uuid)!;
-			event.delete();
+			this.cache.delete(uuid)!;
 			return true;
 		}
 		return false;

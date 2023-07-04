@@ -8,6 +8,7 @@ import {
 } from '@ionic/react';
 import { CountdownEvent } from '../../core/countdownEvent';
 import './style.css';
+import { Redirect } from 'react-router';
 
 export type CELIProps = {
 	event: CountdownEvent;
@@ -76,6 +77,13 @@ export default class CEventListItem extends React.Component<
 			<IonCard
 				className="countdown-event"
 				style={{ boxShadow: this.state.shadow }}
+				onClick={(event) => {
+					this.render = () => (
+						<Redirect
+							to={`/event/detail/${this.props.event.uuid()}`}
+						/>
+					);
+				}}
 			>
 				<IonCardHeader>
 					<IonCardSubtitle>

@@ -26,7 +26,15 @@ export class CountdownEvent {
 		return builder;
 	}
 
-	async save(): Promise<boolean> {
+	data() {
+		return {
+			uuid: this._uuid,
+			name: this._name,
+			finish_date: this._finish_date,
+		};
+	}
+
+	async save(method: 'POST' | 'PUT'): Promise<boolean> {
 		const body = {
 			uuid: this._uuid,
 			name: this._name,
@@ -34,7 +42,7 @@ export class CountdownEvent {
 		};
 		try {
 			await fetch('http://localhost:3000/api/v1/events', {
-				method: 'POST',
+				method,
 				headers: {
 					'Content-Type': 'application/json',
 				},

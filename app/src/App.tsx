@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router';
 import {
 	IonApp,
 	IonIcon,
@@ -44,7 +44,6 @@ setupIonicReact();
 
 const App: React.FC = () => {
 	const eStore = new CountdownEventStore();
-
 	return (
 		<IonApp>
 			<IonReactRouter>
@@ -56,21 +55,38 @@ const App: React.FC = () => {
 						<Route exact path="/passed">
 							<PassedPage events={eStore} />
 						</Route>
-						<Route path="/event/create">
-							<RegisterPage events={eStore} type="create" />
-						</Route>
-						<Route path="/event/edit">
-							<Redirect to="/event/create" />
-						</Route>
 						<Route
-							path="/event/edit/:eventId"
-							children={({ match }) => (
-								<RegisterPage
-									events={eStore}
-									type="edit"
-									id={match?.params.eventId}
-								/>
-							)}
+							path="/event/:page?/:uuid?"
+							render={({ match }) => {
+								const { params } = match;
+								if (
+									!params.page ||
+									!['create', 'detail'].includes(
+										params.page
+									) ||
+									(['detail'].includes(params.page) &&
+										!params.uuid)
+								) {
+									return <Redirect to="/active" />;
+								}
+								if (params.uuid) {
+									const event = eStore.event(params.uuid);
+									return (
+										<RegisterPage
+											events={eStore}
+											type={params.page}
+											event={event!}
+										/>
+									);
+								} else {
+									return (
+										<RegisterPage
+											events={eStore}
+											type={params.page}
+										/>
+									);
+								}
+							}}
 						/>
 						<Route exact path="/">
 							<Redirect to="/active" />

@@ -5,7 +5,7 @@ import { Debug } from './debug';
 const options: PoolOptions = {
 	host: 'localhost',
 	user: 'root',
-	password: '', // change if you do have a password
+	password: 'root', // change if you do have a password
 	database: 'countdown_events',
 	waitForConnections: true,
 	connectionLimit: 10,

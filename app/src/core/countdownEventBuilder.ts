@@ -11,8 +11,8 @@ export class CountdownEventBuilder {
 		return this;
 	}
 
-	setFinishDate(finishDate: string): CountdownEventBuilder {
-		this.finish_date = finishDate;
+	setFinishDate(finish_date: string): CountdownEventBuilder {
+		this.finish_date = finish_date;
 		return this;
 	}
 
